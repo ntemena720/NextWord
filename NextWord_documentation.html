@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Word Predicting App Documentation</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Word Predicting App Documentation</h1>
+
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring web pages (click the <strong>Help</strong> toolbar button for more details on using R Markdown).</p>
+
+<p>When you click the <strong>Knit HTML</strong> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+
+<h4>Synopsis</h4>
+
+<p>This document will show how to build a word predicting application using ngram models. This application behaves like the smartkey features on smartphones.   </p>
+
+<p>this document will provide the details on:   </p>
+
+<ol>
+<li>How to efficiently build (and clean) an ngram model</li>
+<li>Use the most efficient query method to search through the ngram model files</li>
+<li>Provide 2 algorithms for word prediction<br/></li>
+</ol>
+
+<hr/>
+
+<h3><strong>Preparing the Data</strong></h3>
+
+<p>Data used on this project can be downloaded from this <a href="https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"><strong>link.</strong></a>   </p>
+
+<p>Data files consist of 3 files:   </p>
+
+<ol>
+<li><p>Blogs   </p></li>
+<li><p>Tweets   </p></li>
+<li><p>News   </p></li>
+</ol>
+
+<hr/>
+
+<p>Data information from the 3 files:   </p>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk sample plot"/></p>
+
+<hr/>
+
+<h3><strong>Cleaning Data</strong></h3>
+
+<p><strong>Machine specs used to perform this tasks:</strong>   </p>
+
+<p>Intel core i5-4300U CPU @1.90GHz 2.49GHz   </p>
+
+<p>Memory: 8GIG   </p>
+
+<hr/>
+
+<p>All the different steps I have taken to clean the data: </p>
+
+<ol>
+<li><p>Read data -&gt; clean data -&gt; 2-5 tokenize (ngram package) 2-3-4 were all quick until 5 ngram: <em>machine froze</em>   </p></li>
+<li><p>Read data -&gt; 2-5 tokennize and clean (quanteda) worked until 5 grams: <em>run out of memory</em>   </p></li>
+<li><p>Read data -&gt; 2-5 tokenize and clean (quanteda) -&gt;dfm -&gt;df<em>trim with min freq of 4: _more than 35 minutes on 5 ngram</em>    </p></li>
+<li><p>Read data -&gt; clean data -&gt; 2-5 tokenize(quanteda) -&gt;dfm -&gt; df<em>trim min freq of 4: _between 30-35 minutes on 5 ngram</em></p></li>
+<li><p><strong>Read data -&gt; clean data -&gt; 2-5 tokenize(quanteda) -&gt; dfm(with tolower = false) -&gt; df_trim min freq 4: the fastest, less tha 30 minutes</strong>   </p></li>
+</ol>
+
+<hr/>
+
+<p>Clean data function I used:   </p>
+
+<ol>
+<li><p>Concatenate from Ngram   </p></li>
+<li><p>Preprocess to lower case and remove numbers from ngram    </p></li>
+<li><p>Remove cursewords from tm   </p></li>
+<li><p>Gsub remove punctuations, non alphabet characters, foreign charaters, orphaned characters from base r   </p></li>
+<li><p>Remove whitespace from tm     </p>
+
+<hr/></li>
+</ol>
+
+<p><strong>TIP 1</strong>: when cleaning, do not use piping from dplyr, memory won&#39;t be efficienctly used.   </p>
+
+<p>I assigned every task result to a new variable and removed old variable to reclaim memory using rm() and gc() respectively.   </p>
+
+<hr/>
+
+<p><strong>TIP 2</strong>: since the input file is already been cleaned and converted to lower case, no need to do it again when running the DFM function. Using the same sample token file with object size 99.3MB, here is what you will gain:   </p>
+
+<ul>
+<li>dfm using the default <em>tolower = TRUE</em> it took 6.9sec and 5.81 seconds.</li>
+<li>dfm using <em>tolower = FALSE</em>  it took <strong>4.63</strong> and <strong>4.40</strong> seconds.</li>
+</ul>
+
+<p>Once the ngram is processed, I converted the file to a dataframe using the tidy package and saved it as a file.   </p>
+
+<hr/>
+
+<h3><strong>Building Ngram Model</strong></h3>
+
+<p>At this point I have 3 version (blog,news and tweet) of 2 to 4 ngram files.I loaded same number of ngram files and merged them. Identified all common word combination from all the 3 version and summed up word frequency for accuracy.   </p>
+
+<p>I then converted the file from dataframe to data table. Then saved the files accordingly. At this point all the ngram word combination for all X- ngram are all unique. The merged files now becomes the final ngram model.   </p>
+
+<hr/>
+
+<p>###<strong>The most efficient way to search and filter through the ngram model</strong>    </p>
+
+<p>Since the ngram model files are all in megabytes in size with milions of data rows, it is important to use a search method thaty is efficient and fast. I found using sqldf is the fastest way searching thorugh millions of data rows. Below is a list of time i took to search thorugh the rows using different search methods.</p>
+
+<p>Using the same sample file with 1,416,902 observations   </p>
+
+<p>Dataframe using dplyr to search: <strong>3.55 | 3.37 sec</strong></p>
+
+<p>Datatable using dplyr to search: <strong>3.41 | 3.41 sec</strong> </p>
+
+<p>Datatable using sqldf to search:   <strong>1.43 | 1.25 sec</strong> </p>
+
+<p>Dataframe using sqldf to search:   <strong>1.30 | 1.25 sec</strong>    </p>
+
+<p><strong>SQLDF</strong> is the fastest way to search through a large dataset.</p>
+
+<hr/>
+
+<h3><strong>2 kinds of Word Prediction Algorithm</strong></h3>
+
+<p>1) <strong>Straight word input to +1 ngram model search</strong>   </p>
+
+<ul>
+<li><p>If entered word is 1, search the 2-ngram model file   </p></li>
+<li><p>If entered word is 2, search the 3-ngram model file    </p></li>
+<li><p>If entered word is 3, search the 4-ngram model file    </p></li>
+<li><p>If entered word is more than 3, use the backoff algorithm    </p></li>
+</ul>
+
+<p>2) <strong>Backoff Algorithm</strong>   </p>
+
+<ul>
+<li><p>Count the words entered   </p></li>
+<li><p>Process words entered and determine: last word, last 2 words and last 3 words   </p></li>
+<li><p>Using the last 3 words, search the 4-ngram model file    </p></li>
+<li><p>Using the last 2 words, search the 3-ngram model file   </p></li>
+<li><p>Using the last word, search the 2-ngram model file    </p></li>
+</ul>
+
+<hr/>
+
+<hr/>
+
+<p>Link to <a href="https://rpubs.com/noeltemena/NextWordApp">Word Predicting Presentation</a>   </p>
+
+<p>Link to <a href="https://noeltemena.shinyapps.io/ShinyWord/">Shiny Word Predicting App</a>   </p>
+
+<hr/>
+
+<hr/>
+
+<hr/>
+
+</body>
+
+</html>
