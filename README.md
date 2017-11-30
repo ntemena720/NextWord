@@ -18,3 +18,5 @@ There are 6 files on this repository:
 
 7) app.R: source file for Shiny app using sqldf to search the next "predicted" word.
 
+To see this in action: https://noeltemena.shinyapps.io/ShinyWord/
+
