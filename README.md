@@ -13,7 +13,7 @@ There are 6 files on this repository:
 
 3) 1_cleandata.R: source file for cleaning the source files from a collection of blogs,tweets and news. I purposesly not used the dplyr pipe on Cleanfile function to prevent memory crash while processing millions of data row. 
 
-4) 2_Tokenize.RR: source files for building the ngram model files
+4) 2_Tokenize.R: source files for building the ngram model files
 
 5) 3_mergetables.R: source file for merging ngram model files. Merge function inlduces adding word frequency from the intersect word from the 2 word data frame.
 
