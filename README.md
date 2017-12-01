@@ -9,7 +9,7 @@ There are 6 files on this repository:
 
 1) NextWord_documentation.html: an HTML file with no R codes that describes steps on efficiently cleaning data files and building an ngram model without running out of memeory. This also includes what function/package/algorithm to use for quick word search.
 
-2) 1_cleandata.R: source file for cleaning the source files from a collection of blogs,tweets and news. I purposesly not used the dplyr pipe on Cleanfile function to prevent memory crash while processing millions of data row.
+2) 1_cleandata.R: source file for cleaning the source files from a collection of blogs,tweets and news. I purposesly not used the dplyr pipe on Cleanfile function to prevent memory crash while processing millions of data row. Click to read https://rpubs.com/noeltemena/ngram
 
 3) 2_Tokenize.RR: source files for building the ngram model files
 
